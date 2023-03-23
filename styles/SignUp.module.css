@@ -1,0 +1,34 @@
+.signUpSection{
+    background-color: #161D27;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* max-height: 100vh;
+    max-width: 100vw ;
+    */
+    overflow-wrap: inherit;
+}
+
+.txt {
+    color: white;
+}
+
+.input{
+    background-color: #161D27;
+    width: 150px;
+    height: 35px;
+    margin:2px;
+}
+.btnSignUp{
+    background-color: white;
+    border-radius: 30px ;
+    border : none;
+    width: 200px;
+    height: 50px;
+    color:black;
+    font-weight: bold;
+    margin : 20px;
+    cursor: grab;
+    transition: background-color 1s;
+   }

@@ -111,9 +111,9 @@ function Login() {
                 </div>
                 <p className={styles.title}>See what's </p>
                 <p className={styles.title}>Happening</p>
-                <p className={styles.subtitle}>Join Hackatweet today</p>
+                <p className={styles.subtitle}>Join Hackatweet today.</p>
                 <button className ={styles.btnSignUp}onClick={() => showModalSignUp()}>Sign up</button>
-                <a className={styles.subtitle}>Already have an account ? </a>
+                <a className={styles.question}>Already have an account ? </a>
                 <button className ={styles.btnSignIn} onClick={() => showModalSignIn()}>Sign In</button>
 
                 

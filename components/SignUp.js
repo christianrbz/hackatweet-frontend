@@ -33,11 +33,13 @@ function SignUp() {
 
 
                 return (
-                    <div className={styles.registerSection}>
-					<p>Sign-up</p>
-					<input type="text" placeholder="Username" id="signUpUsername" onChange={(e) => setSignUpUsername(e.target.value)} value={signUpUsername} />
-					<input type="password" placeholder="Password" id="signUpPassword" onChange={(e) => setSignUpPassword(e.target.value)} value={signUpPassword} />
-					<button id="register" onClick={() => handleRegister()}>Register</button>
+                    <div className={styles.signUpSection}>
+                         <img  src="/bird_returned.png"  alt="bird" width={70} height={50}/>
+                        <p className={styles.txt}>Create your Hackatweet account</p>
+                        <input className={styles.input}type="text" placeholder="Username" id="signUpUsername" onChange={(e) => setSignUpUsername(e.target.value)} value={signUpUsername} />
+                        <input className={styles.input} type="password" placeholder="Password" id="signUpPassword" onChange={(e) => setSignUpPassword(e.target.value)} value={signUpPassword} />
+                        <input className={styles.input} type="password" placeholder="Password" id="signUpPassword" onChange={(e) => setSignUpPassword(e.target.value)} value={signUpPassword} />
+                        <button className={styles.btnSignUp} id="register" onClick={() => handleRegister()}>Sign Up</button>
 				    </div>
 
                     );

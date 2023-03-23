@@ -6,6 +6,7 @@
     padding: -10px;
     max-height: 100vh;
     max-width: 100vw;
+    text-align: center;
    
    
 }
@@ -101,19 +102,31 @@
     
 }
 
+.question{
+    color: aliceblue;
+    font-size : 18px;
+    margin:0;
+    margin-top: 20px;
+}
 .subtitle{
     color: aliceblue;
-
+    font-weight: bold;
     font-size : 30px;
     margin:0;
+    margin-top : 30px;
     
 }
 
 .modal{
-    background-color: red;
+  
+  
+  display: inline-block;
+  background-color: transparent;
+  border-radius: 30px;
 }
 
 .birdLogo{
     margin-bottom: 200px;
+    
     cursor: grab;
 }
