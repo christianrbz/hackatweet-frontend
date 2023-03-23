@@ -2,59 +2,118 @@
     display: flex;
     flex-direction: row;
     
-    margin : 0;
-    padding: 0;
-    height: 100vh;
+    margin : -10px;
+    padding: -10px;
+    max-height: 100vh;
+    max-width: 100vw;
+   
    
 }
 
 .leftSide{
     background-image: url('/welcomePicture.png');
     width: 40%;  
+    height: 100vh;
+    background-position: center;
 
 }
 
 .rightSide{
     background-color: #161D27;
-    width: 60%;
-
+    width: 65%;
     display: flex;
     flex-direction: column;
-    justify-content:space-around;
-    
-    
+    justify-content: baseline;
+    align-items: baseline;
+    padding :80px;
+    justify-content:center;
+    margin:0;    
 }
 
 
 .registerContainer{
     background-color: black;
 }
-.sign{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: baseline;
-    margin : 20px;
-}
 
 
+.btnSignUp{
+   background-color: #378FEE;
+   border-radius: 30px ;
+   border : none;
+   width: 200px;
+   height: 50px;
+   color: white;
+   font-weight: bold;
+   margin : 20px;
+   cursor: grab;
+ 
+   
+    transition: background-color 1s;
+  }
+  
+  .btnSignUp:hover {
+    background-color: #004369;
+  }
+  
+  .btnSignUp:focus,
+  .btnSignUp:active {
+    background-color: black;
+    transition: none;
+  }
+      
+   
 
 
+.btnSignIn{
+    background-color: #161D27;
+    border-radius: 30px ;
+    border : 2px solid #414B58;
+    width: 200px;
+    height: 50px;
+    font-weight: bold;
+   color: #378FEE;
+   margin : 20px;   
+   cursor: grab;
+   transition: background-color 1s;
+ }
+
+ .btnSignIn:hover {
+    background-color: #004369;
+  }
+  
+  .btnSignIn:focus,
+  .btnSignIn:active {
+    background-color: black;
+    transition: none;
+  }
+      
 
 
 .title{
     color: aliceblue;
-    font-size : 30px;
+    font-size : 80px;
     font-weight: bold;
+    margin : 0;
+
+   
+   
+
+    
 }
 
 .subtitle{
     color: aliceblue;
 
-    font-size : 20px;
+    font-size : 30px;
+    margin:0;
     
 }
 
 .modal{
     background-color: red;
+}
+
+.birdLogo{
+    margin-bottom: 200px;
+    cursor: grab;
 }

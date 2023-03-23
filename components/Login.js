@@ -2,6 +2,7 @@ import styles from '../styles/Login.module.css';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal } from 'antd';
+import SignUp from './SignUp';
 
 
 function Login() {
@@ -21,26 +22,26 @@ function Login() {
 		setIsModalSignInVisible(!isModalSignInVisible);
 	};
 
-    const handleRegister = () => {
+    // const handleRegister = () => {
 
-        console.log(signUpUsername)
-        console.log(signUpPassword)
-		fetch('https://hackatweet-backend-sigma.vercel.app/users/signup', {
-			method: 'POST',
-            //mode: 'no-cors',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ firstname: signUpUsername, username: signUpUsername,  password: signUpPassword }),
-		}).then(response => response.json())
-			.then(data => {
-				if (data.result) {
-					// dispatch(login({ username: signUpUsername, token: data.token }));
-					// setSignUpUsername('');
-					// setSignUpPassword('');
-					// setIsModalVisible(false)
-                    console.log("ça marche")
-				}
-			});
-	};
+    //     console.log(signUpUsername)
+    //     console.log(signUpPassword)
+	// 	fetch('https://hackatweet-backend-sigma.vercel.app/users/signup', {
+	// 		method: 'POST',
+            
+	// 		headers: { 'Content-Type': 'application/json' },
+	// 		body: JSON.stringify({ firstname: signUpUsername, username: signUpUsername,  password: signUpPassword }),
+	// 	}).then(response => response.json())
+	// 		.then(data => {
+	// 			if (data.result) {
+	// 				// dispatch(login({ username: signUpUsername, token: data.token }));
+	// 				// setSignUpUsername('');
+	// 				// setSignUpPassword('');
+	// 				// setIsModalVisible(false)
+    //                 console.log("ça marche")
+	// 			}
+	// 		});
+	// };
 
     const handleConnection = () => {
 
@@ -66,12 +67,13 @@ function Login() {
 
         modalSignUpContent = (
 			<div className={styles.registerContainer}>
-				<div className={styles.registerSection}>
+                <SignUp/>
+				{/* <div className={styles.registerSection}>
 					<p>Sign-up</p>
 					<input type="text" placeholder="Username" id="signUpUsername" onChange={(e) => setSignUpUsername(e.target.value)} value={signUpUsername} />
 					<input type="password" placeholder="Password" id="signUpPassword" onChange={(e) => setSignUpPassword(e.target.value)} value={signUpPassword} />
 					<button id="register" onClick={() => handleRegister()}>Register</button>
-				</div>
+				</div> */}
 				
 			</div>
 		);
@@ -89,6 +91,8 @@ function Login() {
 					<input type="password" placeholder="Password" id="signInPassword" onChange={(e) => setSignInPassword(e.target.value)} value={signInPassword} />
 					<button id="connection" onClick={() => handleConnection()}>Connect</button>
 				</div>
+
+
 			</div>
 		);
     }
@@ -102,20 +106,16 @@ function Login() {
 
             <div className={styles.rightSide}>
                 
-                 <div classname = {styles.birdLogo}>
+                 <div className = {styles.birdLogo}>
                     <img  src="/bird_returned.png"  alt="bird" width={70} height={50}/>
                 </div>
+                <p className={styles.title}>See what's </p>
+                <p className={styles.title}>Happening</p>
+                <p className={styles.subtitle}>Join Hackatweet today</p>
+                <button className ={styles.btnSignUp}onClick={() => showModalSignUp()}>Sign up</button>
+                <a className={styles.subtitle}>Already have an account ? </a>
+                <button className ={styles.btnSignIn} onClick={() => showModalSignIn()}>Sign In</button>
 
-                <div className={styles.sign}>
-
-                    <p className={styles.title}>See what's </p>
-                    <p className={styles.title}>Happening</p>
-                    <p className={styles.subtitle}>Join Hackatweet today</p>
-                    <button onClick={() => showModalSignUp()}>Sign up</button>
-                    <a className={styles.subtitle}>Already have an account ? </a>
-                    <button onClick={() => showModalSignIn()}>Sign In</button>
-
-                </div>
                 
 
             </div>
