@@ -25,11 +25,11 @@ function Login() {
 
         console.log(signUpUsername)
         console.log(signUpPassword)
-		fetch('https://vercel.com/christianrbz/hackatweet-backend/users/signup', {
+		fetch('https://hackatweet-backend-sigma.vercel.app/users/signup', {
 			method: 'POST',
-            mode: 'no-cors',
-			headers: { 'Content-Type': 'app/json' },
-			body: JSON.stringify({ username: signUpUsername, password: signUpPassword }),
+            //mode: 'no-cors',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ firstname: signUpUsername, username: signUpUsername,  password: signUpPassword }),
 		}).then(response => response.json())
 			.then(data => {
 				if (data.result) {
