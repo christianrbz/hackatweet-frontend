@@ -1,0 +1,60 @@
+.login{
+    display: flex;
+    flex-direction: row;
+    
+    margin : 0;
+    padding: 0;
+    height: 100vh;
+   
+}
+
+.leftSide{
+    background-image: url('/welcomePicture.png');
+    width: 40%;  
+
+}
+
+.rightSide{
+    background-color: #161D27;
+    width: 60%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around;
+    
+    
+}
+
+
+.registerContainer{
+    background-color: black;
+}
+.sign{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: baseline;
+    margin : 20px;
+}
+
+
+
+
+
+
+.title{
+    color: aliceblue;
+    font-size : 30px;
+    font-weight: bold;
+}
+
+.subtitle{
+    color: aliceblue;
+
+    font-size : 20px;
+    
+}
+
+.modal{
+    background-color: red;
+}
