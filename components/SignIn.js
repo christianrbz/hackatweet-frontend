@@ -55,8 +55,8 @@ function SignIn() {
                 <h3>Connect to Hackatweet</h3>
                 <input type="text" placeholder="Username" id="signInUsername" onChange={(e) => setSignInUsername(e.target.value)} value={signInUsername} />
                 <input type="password" placeholder="Password" id="signInPassword" onChange={(e) => setSignInPassword(e.target.value)} value={signInPassword} />
-                <button id="connection" onClick={() => handleConnection()}>            
-                    <Link href={home}>Sign in</Link>                
+                <button id="connection" >            
+                    <Link href={home} onClick={() => handleConnection()}>Sign in</Link>                
                 </button>
             </div>
         </div>

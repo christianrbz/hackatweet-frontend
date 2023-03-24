@@ -11,6 +11,36 @@ function Home() {
     const user = useSelector((state) => state.users.value);
     const [home, setLoginPage] = useState('/');
     const [tweetsData, setTweetsData] = useState([]);
+    const [textTweet, setTextTweet] = useState("");
+
+    const handleTweet = () => {
+        const words = textTweet.split(' ');
+        const hashtags = [];
+        let textHashtag = '';
+
+        for (let i = 0; i < words.length; i++) {
+            if (words[i].startsWith('#')) {
+                hashtags.push(words[i]);
+            } else {
+                textHashtag += words[i] + ' ';
+            }
+        }
+        fetch('https://hackatweet-backend-sigma.vercel.app/tweets', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: textHashtag.trim(), hashtag: hashtags.join(' '), user: user.id }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result) {
+                    console.log("envoyé!");
+                    // Ajouter le nouvel objet tweet à la fin du tableau existant
+                    setTweetsData(prevTweets => prevTweets.concat(data.tweet));
+                    setTextTweet("");
+                }
+            });
+    };
+
 
     const handleLogout = () => {
         dispatch(logout());
@@ -27,19 +57,22 @@ function Home() {
 
 
 
-
-
-
     return (
         <div className={styles.home}>
 
             <div className={styles.leftSide}>
                 <img src="/bird_returned.png" alt="bird" />
                 <div>
-                    <img src="" alt="" />
-                    <h2>{user.firstname} </h2>
-                    <h3>@{user.username} </h3>
-                    <button onClick={() => handleLogout()}><Link href={home} className={styles.linkButton}>Logout</Link></button>
+                    <div className={styles.profil}>
+
+                        <img src="/user.png" alt="" />
+                        <div className={styles.profilText}>
+                            <span className={styles.profilFirstname}>{user.firstname} </span>
+                            <span className={styles.profilUsername}>@{user.username}</span>
+                        </div>
+                    </div>
+                    <button><Link href={home} className={styles.linkButton} onClick={() => handleLogout()}>Logout</Link></button>
+
                 </div>
             </div>
 
@@ -47,7 +80,8 @@ function Home() {
 
                 <div className={styles.tweet}>
                     <h2>Home</h2>
-                    <textarea name="tweet" id="tweet" placeholder="What's up ?"></textarea>
+                    <textarea name="tweet" id="tweet" placeholder="What's up ?" onChange={(e) => setTextTweet(e.target.value)} value={textTweet}></textarea>
+                    <button onClick={() => handleTweet()} >Tweet</button>
                 </div>
 
                 <div className={styles.lastTweets}>
@@ -55,10 +89,12 @@ function Home() {
                     {tweetsData.map((tweet, index) => (
                         <div key={index}>
                             <div>
-                                <img src="" alt="" />
+                                <div className={styles.imageTweet}>
+                                <img src="/user.png" alt="" />
                                 <p>{user.firstname} - @{user.username} - 5 hours</p>
+                                </div>
                             </div>
-                            <p>{tweet.text} {tweet.hashtag}</p>
+                            <p>{tweet.text} -{tweet.hashtag} </p>
                         </div>
                     ))}
 
@@ -70,7 +106,11 @@ function Home() {
 
             <div className={styles.rightSide}>
                 <h2>Trends</h2>
-                <p>hashtag</p>
+                {tweetsData.map((tweet, index) => (
+                    <div key={index}>
+                        <p> {tweet.hashtag}</p>
+                    </div>
+                ))}
 
             </div>
 
