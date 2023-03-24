@@ -1,12 +1,16 @@
 import styles from '../styles/SignIn.module.css';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Home from './Home';
+import { login } from '../reducers/user';
 
 function SignIn(props) {
+	const dispatch = useDispatch();
     const [signInUsername, setSignInUsername] = useState('');
     const [signInPassword, setSignInPassword] = useState('');
     const [home, setHome] = useState('/');
+
 
     const handleConnection = () => {
         fetch('https://hackatweet-backend-sigma.vercel.app/users/signin', {
@@ -15,9 +19,11 @@ function SignIn(props) {
             body: JSON.stringify({ username: signInUsername, password: signInPassword }),
         }).then(response => response.json())
             .then(data => {
-                if (data.result) {
+                if (data) {
+					setHome("/home");
                     console.log("connecté!");
-                    setHome("/home");
+					dispatch(login({ firstname: data.data.firstname, username: signInUsername, id: data.data._id }));
+                    
                 }
                 else {
                     console.log("pas connecté")

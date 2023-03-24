@@ -20,10 +20,14 @@
 
 .leftSide button {
     background-color: #161D27;
-    color: white;
     padding: 5px 10px;
     border: solid 1px lightgrey;
     border-radius: 50px
+}
+
+.linkButton {
+    color: white;
+    text-decoration:none;
 }
 
 
