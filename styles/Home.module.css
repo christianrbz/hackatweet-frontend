@@ -1,5 +1,5 @@
 .home img {
-    width: 10%;
+    width: 25%;
 }
 
 .home {
@@ -36,13 +36,15 @@
     border-right: 1px solid lightgrey;
 }
 
-.tweet input {
+.tweet textarea {
     width: 90%;
     background-color: #161D27;
     padding: 5px;
     color: white;
     font-size: 16px;
     margin-left: 20px;
+    border: none;
+    border-bottom: lightgrey 1px solid;
 }
 
 .tweet {

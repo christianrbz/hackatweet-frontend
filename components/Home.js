@@ -19,7 +19,7 @@ function Home() {
 
                 <div className={styles.tweet}>
                     <h2>Home</h2>
-                    <input type="text" name="" id="" value="What's up ?" />
+                    <textarea name="tweet" id="tweet" placeholder="What's up ?"></textarea>
                 </div>
 
                 <div className={styles.lastTweets}>
