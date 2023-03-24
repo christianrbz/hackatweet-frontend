@@ -6,6 +6,7 @@ import Login from './Login';
 import Link from 'next/link';
 
 
+
 function Home() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.users.value);
@@ -24,11 +25,6 @@ function Home() {
                 setTweetsData(data.tweets);
             });
     }, []);
-
-
-
-
-
 
     return (
         <div className={styles.home}>
@@ -71,6 +67,9 @@ function Home() {
             <div className={styles.rightSide}>
                 <h2>Trends</h2>
                 <p>hashtag</p>
+                <button>
+                    <Link href="/hashtag">Access to Hashtags page</Link>   
+                </button>
 
             </div>
 

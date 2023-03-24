@@ -29,7 +29,6 @@ function Login() {
 		);
     }
 
-
 	// SignIn
     const showModalSignIn = () => {
 		setIsModalSignInVisible(!isModalSignInVisible);	
@@ -44,8 +43,6 @@ function Login() {
 				</div>
 		);
 	}
-    
-    
 
 	return (
         <div className={styles.login}>
@@ -57,7 +54,7 @@ function Login() {
                  <div className = {styles.birdLogo}>
                     <img  src="/bird_returned.png"  alt="bird" width={70} height={50}/>
                 </div>
-                <p className={styles.title}>See what's </p>
+                <p className={styles.title}>See What's </p>
                 <p className={styles.title}>Happening</p>
                 <p className={styles.subtitle}>Join Hackatweet today.</p>
                 <button className ={styles.btnSignUp}onClick={() => showModalSignUp()}>Sign up</button>
