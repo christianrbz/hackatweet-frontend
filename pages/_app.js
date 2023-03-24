@@ -37,7 +37,7 @@ export default function App({ Component, pageProps }) {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
       <Head>
-        <title>Morning News</title>
+        <title>Hackatweet</title>
       </Head>
      
       <Component {...pageProps} />

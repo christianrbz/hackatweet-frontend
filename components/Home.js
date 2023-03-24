@@ -88,14 +88,14 @@ function Home() {
 
                     {tweetsData.map((tweet, index) => (
                         <div key={index}>
-                            <div>
+                            <div >
                                 <div className={styles.imageTweet}>
                                 <img src="/user.png" alt="" />
                                 <p>{user.firstname} - @{user.username} - 5 hours</p>
                                 </div>
                             </div>
-                            <p>{tweet.text} -{tweet.hashtag} </p>
-                        </div>
+                            <p>{tweet.text} - {tweet.hashtag} </p>
+                        </div >
                     ))}
 
                 </div>
