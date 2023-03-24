@@ -105,10 +105,9 @@ function Home() {
 
             <div className={styles.rightSide}>
                 <h2>Trends</h2>
-                <p>hashtag</p>
-                <button>
+                {/* <button>
                     <Link href="/hashtag">Access to Hashtags page</Link>   
-                </button>
+                </button> */}
                 {tweetsData.map((tweet, index) => (
                     <div key={index}>
                         <p> {tweet.hashtag}</p>
