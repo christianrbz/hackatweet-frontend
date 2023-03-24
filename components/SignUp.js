@@ -12,7 +12,7 @@ function SignUp() {
 	const [signUpPassword, setSignUpPassword] = useState('');
 
 	const showModalSignUp = () => {
-		console.log("Hello button hide modal")
+		console.log("Hello button hide modal Up")
 		dispatch(showModal(false))
 	};
 

@@ -33,16 +33,17 @@
     transition: background-color 1s;
    }
 
-   .userSection{
-     color: white;
-   }
+
    
    .Xmark{
             position : relative;
             margin:0;
             width:100%;
             display: flex;
-            justify-content: end;
+            justify-content: flex-end;
+          
+            color : gray;
+            cursor: grab;
 
 
    }

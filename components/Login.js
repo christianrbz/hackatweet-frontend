@@ -15,7 +15,6 @@ function Login() {
 
 	// SignUp : 
 	const showModalSignUp = () => {
-		console.log("button")
 		setIsModalSignUpVisible(!isModalSignUpVisible);
 		dispatch(showModal(true));
 	};
@@ -34,6 +33,7 @@ function Login() {
 	// SignIn
     const showModalSignIn = () => {
 		setIsModalSignInVisible(!isModalSignInVisible);	
+		dispatch(showModal(true));
 	};
 
 	let modalSignInContent;
@@ -73,7 +73,7 @@ function Login() {
 				</Modal>
 			</div>}
 
-            {isModalSignInVisible && <div id="react-modals">
+            {modal && <div id="react-modals">
 				<Modal getContainer="#react-modals" className={styles.modal} open={isModalSignInVisible} closable={false} footer={null}>
 					{modalSignInContent}
 				</Modal>

@@ -1,13 +1,13 @@
 import styles from '../styles/SignIn.module.css';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import Home from './Home';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faXmark } from '@fortawesome/free-solid-svg-icons';
+import { showModal} from '../reducers/modal';
 
 
-function SignIn(props) {
+function SignIn() {
     const [signInUsername, setSignInUsername] = useState('');
     const [signInPassword, setSignInPassword] = useState('');
     const [home, setHome] = useState('/');
@@ -15,15 +15,13 @@ function SignIn(props) {
     const dispatch = useDispatch();
 
     const showModalSignIn = () => {
-		console.log("Hello button hide modal")
+		console.log("Hello button hide modal IN")
 		dispatch(showModal(false))
 	};
 
     let userSection;
-	
     userSection =
         <div className={styles.Xmark}>
-            
             {<FontAwesomeIcon onClick={()=>(showModalSignIn())} className={styles.userSection} icon={faXmark} /> }
         </div>
 
