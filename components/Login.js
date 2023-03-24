@@ -6,56 +6,46 @@ import SignUp from './SignUp';
 import SignIn from './SignIn';
 import { showModal} from '../reducers/modal';
 
-
-
-
-
 function Login() {
-
     const [isModalSignUpVisible, setIsModalSignUpVisible] = useState(false);
     const [isModalSignInVisible, setIsModalSignInVisible] = useState(false);
 
 	const dispatch = useDispatch();
-
 	const modal = useSelector((state) => state.modal.value);
 
-
-	// SignUp
+	// SignUp : 
 	const showModalSignUp = () => {
 		console.log("button")
 		setIsModalSignUpVisible(!isModalSignUpVisible);
 		dispatch(showModal(true));
 	};
 
-
-	// SignIn
-    const showModalSignIn = () => {
-		setIsModalSignInVisible(!isModalSignInVisible);
-		
-	};
-
-	let modalSignInContent;
-	if (isModalSignInVisible) {
-
-		modalSignInContent = (
-
-				<div>
-					< SignIn />
-				</div>
-		);
-	}
-
-   
-    
-    let modalSignUpContent;
+	// Signup : modal 
+	let modalSignUpContent;
     if (isModalSignUpVisible){
-
         modalSignUpContent = (
 			<div className={styles.registerContainer}>
                 <SignUp/>
 			</div>
 		);
     }
+
+
+	// SignIn
+    const showModalSignIn = () => {
+		setIsModalSignInVisible(!isModalSignInVisible);	
+	};
+
+	let modalSignInContent;
+	if (isModalSignInVisible) {
+		modalSignInContent = (
+				<div>
+					< SignIn />
+				</div>
+		);
+	}
+    
+    
 
 	return (
         <div className={styles.login}>

@@ -1,21 +1,22 @@
-.signin img {
+.signIn img {
     width: 10rem;
     margin: auto;
 }
 
-.signin h3 {
+.signIn h3 {
     text-align: center;
     color: white;
 }
 
-.signin {
+.signIn {
     display: flex;
     flex-direction: column;
     justify-content: center;
     background-color: #161D28;
+    width: 100%;
 }
 
-.signin input {
+.signIn input {
     background-color: #161D28;
     color: lightgrey;
     border: lightgrey, solid, 1px;
@@ -24,10 +25,30 @@
     padding: 5px;
 }
 
-.signin button {
+.signIn button {
     width: 10vw;
     margin: auto;
     margin: 10px auto;
     padding: 5px;
     border-radius: 50px;
+}
+
+
+.Xmark{
+    position : relative;
+    margin:0;
+    width:100%;
+    display: flex;
+    justify-content: end;
+
+
+}
+
+.signInContent{
+width:100%;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+
 }
