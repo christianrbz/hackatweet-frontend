@@ -5,12 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faXmark } from '@fortawesome/free-solid-svg-icons';
 import { showModal} from '../reducers/modal';
+import {login} from '../reducers/users';
 
 
 function SignIn() {
     const [signInUsername, setSignInUsername] = useState('');
     const [signInPassword, setSignInPassword] = useState('');
     const [home, setHome] = useState('/');
+    
     
     const dispatch = useDispatch();
 
@@ -34,9 +36,8 @@ function SignIn() {
             .then(data => {
                 if (data.result) {
                     console.log("connecté!");
+                    dispatch(login({ firstname: data.data.firstname, username: signInUsername, id: data.data._id }));
                     setHome("/home");
-                    
-                    
                 }
                 else {
                     console.log("pas connecté")

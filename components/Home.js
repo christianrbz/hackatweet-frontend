@@ -1,7 +1,35 @@
 import styles from '../styles/Home.module.css';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../reducers/users';
+import Login from './Login';
+import Link from 'next/link';
 
 
 function Home() {
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.users.value);
+    const [home, setLoginPage] = useState('/');
+    const [tweetsData, setTweetsData] = useState([]);
+
+    const handleLogout = () => {
+        dispatch(logout());
+        setLoginPage("/");
+    };
+
+    useEffect(() => {
+        fetch('https://hackatweet-backend-sigma.vercel.app/tweets')
+            .then(response => response.json())
+            .then(data => {
+                setTweetsData(data.tweets);
+            });
+    }, []);
+
+
+
+
+
+
     return (
         <div className={styles.home}>
 
@@ -9,9 +37,9 @@ function Home() {
                 <img src="/bird_returned.png" alt="bird" />
                 <div>
                     <img src="" alt="" />
-                    <h2>John</h2>
-                    <h3>@JohnCena</h3>
-                    <button>Logout</button>
+                    <h2>{user.firstname} </h2>
+                    <h3>@{user.username} </h3>
+                    <button onClick={() => handleLogout()}><Link href={home} className={styles.linkButton}>Logout</Link></button>
                 </div>
             </div>
 
@@ -23,12 +51,17 @@ function Home() {
                 </div>
 
                 <div className={styles.lastTweets}>
-                    <div>
-                        <img src="" alt="" />
-                        <p>Christian - @christianR - 5 hours</p>
-                    </div>
-                    <p>TWEET 1</p>
-                    <p>LIKE</p>
+
+                    {tweetsData.map((tweet, index) => (
+                        <div key={index}>
+                            <div>
+                                <img src="" alt="" />
+                                <p>{user.firstname} - @{user.username} - 5 hours</p>
+                            </div>
+                            <p>{tweet.text} {tweet.hashtag}</p>
+                        </div>
+                    ))}
+
                 </div>
 
 
