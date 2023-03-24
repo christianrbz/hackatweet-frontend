@@ -3,64 +3,49 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal } from 'antd';
 import SignUp from './SignUp';
+import SignIn from './SignIn';
+import { showModal} from '../reducers/modal';
+
+
+
 
 
 function Login() {
 
     const [isModalSignUpVisible, setIsModalSignUpVisible] = useState(false);
     const [isModalSignInVisible, setIsModalSignInVisible] = useState(false);
-	const [signUpUsername, setSignUpUsername] = useState('');
-	const [signUpPassword, setSignUpPassword] = useState('');
-	const [signInUsername, setSignInUsername] = useState('');
-	const [signInPassword, setSignInPassword] = useState('');
 
+	const dispatch = useDispatch();
+
+	const modal = useSelector((state) => state.modal.value);
+
+
+	// SignUp
 	const showModalSignUp = () => {
+		console.log("button")
 		setIsModalSignUpVisible(!isModalSignUpVisible);
+		dispatch(showModal(true));
 	};
 
+
+	// SignIn
     const showModalSignIn = () => {
 		setIsModalSignInVisible(!isModalSignInVisible);
+		
 	};
 
-    // const handleRegister = () => {
+	let modalSignInContent;
+	if (isModalSignInVisible) {
 
-    //     console.log(signUpUsername)
-    //     console.log(signUpPassword)
-	// 	fetch('https://hackatweet-backend-sigma.vercel.app/users/signup', {
-	// 		method: 'POST',
-            
-	// 		headers: { 'Content-Type': 'application/json' },
-	// 		body: JSON.stringify({ firstname: signUpUsername, username: signUpUsername,  password: signUpPassword }),
-	// 	}).then(response => response.json())
-	// 		.then(data => {
-	// 			if (data.result) {
-	// 				// dispatch(login({ username: signUpUsername, token: data.token }));
-	// 				// setSignUpUsername('');
-	// 				// setSignUpPassword('');
-	// 				// setIsModalVisible(false)
-    //                 console.log("ça marche")
-	// 			}
-	// 		});
-	// };
+		modalSignInContent = (
 
-    const handleConnection = () => {
+				<div>
+					< SignIn />
+				</div>
+		);
+	}
 
-		fetch('https://vercel.com/christianrbz/hackatweet-backend/users/signin', {
-			method: 'POST',
-            mode: 'no-cors',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ username: signInUsername, password: signInPassword }),
-		}).then(response => response.json())
-			.then(data => {
-				if (data.result) {
-					dispatch(login({ username: signInUsername, token: data.token }));
-					setSignInUsername('');
-					setSignInPassword('');
-					setIsModalVisible(false)
-				}
-			});
-	};
-
+   
     
     let modalSignUpContent;
     if (isModalSignUpVisible){
@@ -68,31 +53,6 @@ function Login() {
         modalSignUpContent = (
 			<div className={styles.registerContainer}>
                 <SignUp/>
-				{/* <div className={styles.registerSection}>
-					<p>Sign-up</p>
-					<input type="text" placeholder="Username" id="signUpUsername" onChange={(e) => setSignUpUsername(e.target.value)} value={signUpUsername} />
-					<input type="password" placeholder="Password" id="signUpPassword" onChange={(e) => setSignUpPassword(e.target.value)} value={signUpPassword} />
-					<button id="register" onClick={() => handleRegister()}>Register</button>
-				</div> */}
-				
-			</div>
-		);
-    }
-
-    let modalSignInContent;
-    if (isModalSignInVisible){
-
-        modalSignInContent = (
-			<div className={styles.registerContainer}>
-				
-				<div className={styles.registerSection}>
-					<p>Sign-in</p>
-					<input type="text" placeholder="Username" id="signInUsername" onChange={(e) => setSignInUsername(e.target.value)} value={signInUsername} />
-					<input type="password" placeholder="Password" id="signInPassword" onChange={(e) => setSignInPassword(e.target.value)} value={signInPassword} />
-					<button id="connection" onClick={() => handleConnection()}>Connect</button>
-				</div>
-
-
 			</div>
 		);
     }
@@ -100,8 +60,6 @@ function Login() {
 	return (
         <div className={styles.login}>
             <div className={styles.leftSide}>
-              
-
             </div>
 
             <div className={styles.rightSide}>
@@ -116,12 +74,10 @@ function Login() {
                 <a className={styles.question}>Already have an account ? </a>
                 <button className ={styles.btnSignIn} onClick={() => showModalSignIn()}>Sign In</button>
 
-                
-
             </div>
 
 
-            {isModalSignUpVisible && <div id="react-modals">
+            {modal && <div id="react-modals">
 				<Modal getContainer="#react-modals" className={styles.modal} open={isModalSignUpVisible} closable={false} footer={null}>
 					{modalSignUpContent}
 				</Modal>
@@ -134,10 +90,7 @@ function Login() {
 			</div>}
 
             
-           
-            
-
-        </div>
+                </div>
 
 		
 	);

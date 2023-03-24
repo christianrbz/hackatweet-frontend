@@ -1,0 +1,70 @@
+.home img {
+    width: 25%;
+}
+
+.home {
+    display: flex; 
+    flex-direction: row;
+    color: white;
+    background-color: #161D27;
+    height: 100vh;
+}
+
+.leftSide {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30%;
+    padding: 20px;
+}
+
+.leftSide button {
+    background-color: #161D27;
+    color: white;
+    padding: 5px 10px;
+    border: solid 1px lightgrey;
+    border-radius: 50px
+}
+
+
+.middleSide {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    
+    border-left: 1px solid lightgrey;
+    border-right: 1px solid lightgrey;
+}
+
+.tweet textarea {
+    width: 90%;
+    background-color: #161D27;
+    padding: 5px;
+    color: white;
+    font-size: 16px;
+    margin-left: 20px;
+    border: none;
+    border-bottom: lightgrey 1px solid;
+}
+
+.tweet {
+    width: 100%;
+    padding: 10px 0;
+    border-bottom: 1px solid lightgrey;
+}
+
+.tweet h2 {
+    margin-left: 20px;
+}
+
+.lastTweets {
+    width: 100%;
+    padding: 20px;
+}
+
+.rightSide {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}

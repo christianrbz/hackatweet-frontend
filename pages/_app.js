@@ -7,7 +7,7 @@ import Head from 'next/head';
 import { Provider } from 'react-redux';
 
 import users from '../reducers/users';
-
+import modal from '../reducers/modal';
 
 import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -16,7 +16,7 @@ import storage from 'redux-persist/lib/storage';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 
-const reducers = combineReducers({users});
+const reducers = combineReducers({users, modal});
 const persistConfig = { key: 'hackatweet', storage };
 
 const store = configureStore({

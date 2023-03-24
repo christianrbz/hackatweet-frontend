@@ -32,3 +32,8 @@
     cursor: grab;
     transition: background-color 1s;
    }
+
+   .userSection{
+     color: white;
+   }
+   
