@@ -1,0 +1,33 @@
+.signin img {
+    width: 10rem;
+    margin: auto;
+}
+
+.signin h3 {
+    text-align: center;
+    color: white;
+}
+
+.signin {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #161D28;
+}
+
+.signin input {
+    background-color: #161D28;
+    color: lightgrey;
+    border: lightgrey, solid, 1px;
+    width: 10vw;
+    margin: 10px auto;
+    padding: 5px;
+}
+
+.signin button {
+    width: 10vw;
+    margin: auto;
+    margin: 10px auto;
+    padding: 5px;
+    border-radius: 50px;
+}
