@@ -1,86 +1,62 @@
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 import styles from '../styles/Login.module.css';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import Image from 'next/image';
 import { Modal } from 'antd';
-import SignUp from './SignUp';
-import SignIn from './SignIn';
-import { showModal} from '../reducers/modal';
+import SignUp from './SignUp.js';
+import SignIn from './SignIn.js';
 
 function Login() {
-    const [isModalSignUpVisible, setIsModalSignUpVisible] = useState(false);
-    const [isModalSignInVisible, setIsModalSignInVisible] = useState(false);
+  const user = useSelector((state) => state.user.value);
+  const [signUpModalVisible, setSignUpModalVisible] = useState(false);
+  const [signInModalVisible, setSignInModalVisible] = useState(false);
 
-	const dispatch = useDispatch();
-	const modal = useSelector((state) => state.modal.value);
+  const showSignUpModal = () => {
+    setSignUpModalVisible(true);
+  };
 
-	// SignUp : 
-	const showModalSignUp = () => {
-		setIsModalSignUpVisible(!isModalSignUpVisible);
-		dispatch(showModal(true));
-	};
+  const showSignInModal = () => {
+    setSignInModalVisible(true);
+  };
 
-	// Signup : modal 
-	let modalSignUpContent;
-    if (isModalSignUpVisible){
-        modalSignUpContent = (
-			<div className={styles.registerContainer}>
-                <SignUp/>
-			</div>
-		);
-    }
+  const handleCancelSignUp = () => {
+    setSignUpModalVisible(false);
+  };
 
-	// SignIn
-    const showModalSignIn = () => {
-		setIsModalSignInVisible(!isModalSignInVisible);	
-		dispatch(showModal(true));
-	};
+  const handleCancelSignIn = () => {
+    setSignInModalVisible(false);
+  };
 
-	let modalSignInContent;
-	if (isModalSignInVisible) {
-		modalSignInContent = (
-				<div>
-					< SignIn />
-				</div>
-		);
-	}
+  // Redirect to /home if logged in
+  const router = useRouter();
+  if (user.token) {
+    router.push('/');
+  }
 
-	return (
-        <div className={styles.login}>
-            <div className={styles.leftSide}>
-            </div>
+  return (
+    <div className={styles.container}>
+      <div className={styles.leftSection}>
+        <Image src="/logo.png" alt="Logo" width={300} height={300} />
+      </div>
+      <div className={styles.rightSection}>
+        <Image src="/logo.png" alt="Logo" width={50} height={50} />
+        <h2 className={styles.title}>See what’s<br></br>happening</h2>
+        <h3>Join Hackatweet today.</h3>
+        <div onClick={() => showSignUpModal()} className={styles.signUp}><a className={styles.signUpText}> Sign up</a></div>
+        <p>Already have an account?</p>
+        <div onClick={() => showSignInModal()} className={styles.signIn}><a> Sign in</a></div>
+      </div>
 
-            <div className={styles.rightSide}>
-                
-                 <div className = {styles.birdLogo}>
-                    <img  src="/bird_returned.png"  alt="bird" width={70} height={50}/>
-                </div>
-                <p className={styles.title}>See What's </p>
-                <p className={styles.title}>Happening</p>
-                <p className={styles.subtitle}>Join Hackatweet today.</p>
-                <button className ={styles.btnSignUp}onClick={() => showModalSignUp()}>Sign up</button>
-                <a className={styles.question}>Already have an account ? </a>
-                <button className ={styles.btnSignIn} onClick={() => showModalSignIn()}>Sign In</button>
+      <Modal onCancel={() => handleCancelSignUp()} visible={signUpModalVisible} footer={null}>
+        <SignUp />
+      </Modal>
 
-            </div>
-
-
-            {modal && <div id="react-modals">
-				<Modal getContainer="#react-modals" className={styles.modal} open={isModalSignUpVisible} closable={false} footer={null}>
-					{modalSignUpContent}
-				</Modal>
-			</div>}
-
-            {modal && <div id="react-modals">
-				<Modal getContainer="#react-modals" className={styles.modal} open={isModalSignInVisible} closable={false} footer={null}>
-					{modalSignInContent}
-				</Modal>
-			</div>}
-
-            
-                </div>
-
-		
-	);
+      <Modal onCancel={() => handleCancelSignIn()} visible={signInModalVisible} footer={null}>
+        <SignIn />
+      </Modal>
+    </div>
+  );
 }
 
 export default Login;

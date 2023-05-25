@@ -1,89 +1,45 @@
-import styles from '../styles/SignUp.module.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faXmark } from '@fortawesome/free-solid-svg-icons';
-import { showModal} from '../reducers/modal';
-import {login} from '../reducers/users';
-import Link from 'next/link';
+import { login } from '../reducers/user';
+import Image from 'next/image';
+import styles from '../styles/SignUp.module.css';
 
 function SignUp() {
-	
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.value);
 
-	const [signUpFirstname, setSignUpFirstname] = useState('');
-	const [signUpUsername, setSignUpUsername] = useState('');
-	const [signUpPassword, setSignUpPassword] = useState('');
+  // Redirect to /home if logged in
+  const router = useRouter();
+  if (user.token) {
+    router.push('/');
+  }
 
-	const dispatch = useDispatch();
+  const [firstName, setFirstName] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-	const [home, setHome] = useState('/');
-	const showModalSignUp = () => {
-		console.log("Hello button hide modal Up")
-		dispatch(showModal(false))
-	};
+  const handleSubmit = () => {
+    fetch('https://hackatweet-backend-sigma.vercel.app/users/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ firstName, username, password }),
+    }).then(response => response.json())
+      .then(data => {
+        data.result && dispatch(login({ token: data.token, username, firstName }));
+      });
+  };
 
+  return (
+    <div className={styles.container}>
+      <Image src="/logo.png" alt="Logo" width={50} height={50} />
+      <h3 className={styles.title}>Create your Hackatweet account</h3>
+      <input type="text" className={styles.input} onChange={(e) => setFirstName(e.target.value)} value={firstName} placeholder="Firstname" />
+      <input type="text" className={styles.input} onChange={(e) => setUsername(e.target.value)} value={username} placeholder="Username" />
+      <input type="password" className={styles.input} onChange={(e) => setPassword(e.target.value)} value={password} placeholder="Password" />
+      <button className={styles.button} onClick={() => handleSubmit()}>Sign up</button>
+    </div>
+  );
+}
 
-
-	let userSection;
-	
-			userSection =
-				<div className={styles.Xmark}>
-					
-					{<FontAwesomeIcon onClick={()=>(showModalSignUp())} className={styles.userSection} icon={faXmark} /> }
-				</div>
-
-    const handleRegister = () => {
-
-        console.log(signUpUsername)
-        console.log(signUpPassword)
-		fetch('https://hackatweet-backend-sigma.vercel.app/users/signup', {
-			method: 'POST',
-            
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ firstname: signUpFirstname, username: signUpUsername,  password: signUpPassword }),
-		}).then(response => response.json())
-			.then(data => {
-				if (data.result) {
-					// dispatch(login({ username: signUpUsername, token: data.token }));
-					// setSignUpUsername('');
-					// setSignUpPassword('');
-					// setIsModalVisible(false)
-					dispatch(login({ firstname: signUpFirstname, username: signUpUsername, id: data.data.id }));
-                    console.log("ça marche")
-					setHome("/home");
-				}
-			});
-	};
-
-
-
-                return (
-                    <div className={styles.signUpSection}>
-						<div className={styles.Xmark}>
-							{userSection}
-						</div>
-                         <div className={styles.signUp}>
-							<img  src="/bird_returned.png"  alt="bird" width={70} height={50}/>
-							<p className={styles.txt}>Create your Hackatweet account</p>
-
-							<input type="text" placeholder="Firstname" id="signUpFirstname" onChange={(e) => setSignUpFirstname(e.target.value)} value={signUpFirstname} />
-
-							<input type="text" placeholder="Username" id="signUpUsername" onChange={(e) => setSignUpUsername(e.target.value)} value={signUpUsername} />
-
-							<input type="password" placeholder="Password" id="signUpPassword" onChange={(e) => setSignUpPassword(e.target.value)} value={signUpPassword} />
-
-
-
-							<button className={styles.btnSignUp} id="register" onClick={() => handleRegister()}>
-							<Link href={home} onClick={() => handleRegister()}>Sign up</Link>              
-							</button>
-						</div>
-				    </div>
-
-                    );
-                }
-                
-                export default SignUp;
-
-
-
+export default SignUp;

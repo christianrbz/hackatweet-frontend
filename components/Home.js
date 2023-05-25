@@ -1,128 +1,100 @@
-import styles from '../styles/Home.module.css';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../reducers/users';
-import Login from './Login';
+import { logout } from '../reducers/user';
+import { loadTweets, addTweet } from '../reducers/tweets';
 import Link from 'next/link';
-
-
+import Image from 'next/image';
+import LastTweets from './LastTweets';
+import Trends from './Trends';
+import styles from '../styles/Home.module.css';
 
 function Home() {
-    const dispatch = useDispatch();
-    const user = useSelector((state) => state.users.value);
-    const [home, setLoginPage] = useState('/');
-    const [tweetsData, setTweetsData] = useState([]);
-    const [textTweet, setTextTweet] = useState("");
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.value);
 
-    const handleTweet = () => {
-        const words = textTweet.split(' ');
-        const hashtags = [];
-        let textHashtag = '';
+  // Redirect to /login if not logged in
+  const router = useRouter();
 
-        for (let i = 0; i < words.length; i++) {
-            if (words[i].startsWith('#')) {
-                hashtags.push(words[i]);
-            } else {
-                textHashtag += words[i] + ' ';
-            }
+  if (!user.token) {
+    router.push('/login');
+  }
+
+  const [newTweet, setNewTweet] = useState('');
+
+  useEffect(() => {
+    if (!user.token) {
+      return;
+    }
+
+    fetch(`https://hackatweet-backend-sigma.vercel.app/tweets/all/${user.token}`)
+      .then(response => response.json())
+      .then(data => {
+        data.result && dispatch(loadTweets(data.tweets));
+      });
+  }, []);
+
+  const handleInputChange = (e) => {
+    if (newTweet.length < 280 || e.nativeEvent.inputType === 'deleteContentBackward') {
+      setNewTweet(e.target.value);
+    }
+  };
+
+  const handleSubmit = () => {
+    fetch('https://hackatweet-backend-sigma.vercel.app/tweets', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: user.token, content: newTweet }),
+    }).then(response => response.json())
+      .then(data => {
+        if (data.result) {
+          const createdTweet = { ...data.tweet, author: user };
+          dispatch(addTweet(createdTweet));
+          setNewTweet('');
         }
-        fetch('https://hackatweet-backend-sigma.vercel.app/tweets', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text: textHashtag.trim(), hashtag: hashtags.join(' '), user: user.id }),
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.result) {
-                    console.log("envoyé!");
-                    // Ajouter le nouvel objet tweet à la fin du tableau existant
-                    setTweetsData(prevTweets => prevTweets.concat(data.tweet));
-                    setTextTweet("");
-                }
-            });
-    };
+      });
+  };
 
-
-    const handleLogout = () => {
-        dispatch(logout());
-        setLoginPage("/");
-    };
-
-    useEffect(() => {
-        fetch('https://hackatweet-backend-sigma.vercel.app/tweets')
-            .then(response => response.json())
-            .then(data => {
-                setTweetsData(data.tweets);
-            });
-    }, []);
-
-    return (
-        <div className={styles.home}>
-
-            <div className={styles.leftSide}>
-                <img src="/bird_returned.png" alt="bird" />
-                <div>
-                    <div className={styles.profil}>
-
-                        <img src="/user.png" alt="" />
-                        <div className={styles.profilText}>
-                            <span className={styles.profilFirstname}>{user.firstname} </span>
-                            <span className={styles.profilUsername}>@{user.username}</span>
-                        </div>
-                    </div>
-                    <button><Link href={home} className={styles.linkButton} onClick={() => handleLogout()}>Logout</Link></button>
-
-                </div>
-            </div>
-
-            <div className={styles.middleSide}>
-
-                <div className={styles.tweet}>
-                    <h2>Home</h2>
-                    <textarea name="tweet" id="tweet" placeholder="What's up ?" onChange={(e) => setTextTweet(e.target.value)} value={textTweet}></textarea>
-                    <button onClick={() => handleTweet()} >Tweet</button>
-                </div>
-
-                <div className={styles.lastTweets}>
-
-                    {tweetsData.map((tweet, index) => (
-                        <div key={index}>
-                            <div >
-                                <div className={styles.imageTweet}>
-                                <img src="/user.png" alt="" />
-                                <p>{user.firstname} - @{user.username} - 5 hours</p>
-                                </div>
-                            </div>
-                            <p>{tweet.text} - {tweet.hashtag} </p>
-                        </div >
-                    ))}
-
-                </div>
-
-
-            </div>
-
-
-            <div className={styles.rightSide}>
-                <h2>Trends</h2>
-                {/* <button>
-                    <Link href="/hashtag">Access to Hashtags page</Link>   
-                </button> */}
-                {tweetsData.map((tweet, index) => (
-                    <div key={index}>
-                        <p> {tweet.hashtag}</p>
-                    </div>
-                ))}
-
-            </div>
-
-
-
-
+  return (
+    <div className={styles.container}>
+      <div className={styles.leftSection}>
+        <div>
+          <Link href="/">
+            <Image src="/logo.png" alt="Logo" width={50} height={50} className={styles.logo} />
+          </Link>
         </div>
-    );
+        <div>
+          <div className={styles.userSection}>
+            <div>
+              <Image src="/avatar.png" alt="Avatar" width={46} height={46} className={styles.avatar} />
+            </div>
+            <div className={styles.userInfo}>
+              <p className={styles.name}>{user.firstName}</p>
+              <p className={styles.username}>@{user.username}</p>
+            </div>
+          </div>
+          <button onClick={() => { router.push('/login'); dispatch(logout()); }} className={styles.logout}>Logout</button>
+        </div>
+      </div>
 
+      <div className={styles.middleSection}>
+        <h2 className={styles.title}>Home</h2>
+        <div className={styles.createSection}>
+          <textarea type="text" placeholder="What's up?" className={styles.input} onChange={(e) => handleInputChange(e)} value={newTweet} />
+          <div className={styles.validateTweet}>
+            <p>{newTweet.length}/280</p>
+            <button className={styles.button} onClick={() => handleSubmit()}>Tweet</button>
+          </div>
+        </div>
+        <LastTweets />
+      </div>
 
+      <div className={styles.rightSection}>
+        <h2 className={styles.title}>Trends</h2>
+        <Trends />
+      </div>
+    </div >
+  );
 }
 
 export default Home;

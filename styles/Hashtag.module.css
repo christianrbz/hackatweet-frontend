@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'Mont';
-    src: url('/fonts/Mont-Heavy.otf');
+    font-family: "Mont";
+    src: url("/fonts/Mont-Heavy.otf");
   }
   
   .logo {
@@ -60,7 +60,7 @@
   .name {
     margin-right: 5px;
     font-size: 15px;
-    font-family: 'Mont';
+    font-family: "Mont";
     margin-bottom: 0;
   }
   
@@ -95,51 +95,29 @@
     margin: 20px;
   }
   
-  .createSection {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .validateTweet {
+  .searchBar {
+    height: 40px;
     width: 80%;
-    height: 80px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-  }
-  
-  .input {
-    width: 80%;
-    height: 50px;
-    background-color: transparent;
-    border-width: 0px 0px 1px 0px;
-    font-size: 20px;
+    margin-bottom: 25px;
+    border-radius: 30px;
+    border: none;
+    background-color: #1E2732;
+    padding: 10px;
+    font-size: 15px;
     font-weight: 500;
+    color: lightgray;
   }
   
-  .input:focus {
+  .searchBar:focus {
     outline: none;
   }
   
-  .button {
+  .searchSection {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 30px;
-    width: 90px;
-    margin-left: 15px;
-    margin-bottom: 15px;
-    background-color: #409BF1;
-    border: none;
-    border-radius: 40px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-weight: 600;
-    cursor: pointer;
   }
   
-  .button:hover {
-    background-color: #3384cf;
+  .noTweet {
+    text-align: center;
   }

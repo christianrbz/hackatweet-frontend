@@ -1,66 +1,43 @@
-import styles from '../styles/SignIn.module.css';
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faXmark } from '@fortawesome/free-solid-svg-icons';
-import { showModal} from '../reducers/modal';
-import {login} from '../reducers/users';
-
+import { login } from '../reducers/user';
+import Image from 'next/image';
+import styles from '../styles/SignIn.module.css';
 
 function SignIn() {
-    const [signInUsername, setSignInUsername] = useState('');
-    const [signInPassword, setSignInPassword] = useState('');
-    const [home, setHome] = useState('/');
-    
-    
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.value);
 
-    const showModalSignIn = () => {
-		console.log("Hello button hide modal IN")
-		dispatch(showModal(false))
-	};
+  // Redirect to /home if logged in
+  const router = useRouter();
+  if (user.token) {
+    router.push('/');
+  }
 
-    let userSection;
-    userSection =
-        <div className={styles.Xmark}>
-            {<FontAwesomeIcon onClick={()=>(showModalSignIn())} className={styles.userSection} icon={faXmark} /> }
-        </div>
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-    const handleConnection = () => {
-        fetch('https://hackatweet-backend-sigma.vercel.app/users/signin', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: signInUsername, password: signInPassword }),
-        }).then(response => response.json())
-            .then(data => {
-                if (data.result) {
-                    console.log("connecté!");
-                    dispatch(login({ firstname: data.data.firstname, username: signInUsername, id: data.data._id }));
-                    setHome("/home");
-                }
-                else {
-                    console.log("pas connecté")
-                }
-            });
-    };
+  const handleSubmit = () => {
+    fetch('https://hackatweet-backend-sigma.vercel.app/users/signin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+    }).then(response => response.json())
+      .then(data => {
+        data.result && dispatch(login({ token: data.token, firstName: data.firstName, username: data.username }));
+      });
+  };
 
-    return (
-        <div className={styles.signInContent}>
-            <div className={styles.Xmark}>
-				{userSection}
-			</div>
-            <div className={styles.signIn}>
-                <img src="/bird_returned.png" alt="logo" />
-                <h3>Connect to Hackatweet</h3>
-                <input type="text" placeholder="Username" id="signInUsername" onChange={(e) => setSignInUsername(e.target.value)} value={signInUsername} />
-                <input type="password" placeholder="Password" id="signInPassword" onChange={(e) => setSignInPassword(e.target.value)} value={signInPassword} />
-                <button id="connection" >            
-                    <Link href={home} onClick={() => handleConnection()}>Sign in</Link>                
-                </button>
-            </div>
-        </div>
-    );
+  return (
+    <div className={styles.container}>
+      <Image src="/logo.png" alt="Logo" width={50} height={50} />
+      <h3 className={styles.title}>Connect to Hackatweet</h3>
+      <input type="text" className={styles.input} onChange={(e) => setUsername(e.target.value)} value={username} placeholder="Username" />
+      <input type="password" className={styles.input} onChange={(e) => setPassword(e.target.value)} value={password} placeholder="Password" />
+      <button className={styles.button} onClick={() => handleSubmit()}>Sign in</button>
+    </div>
+  );
 }
 
 export default SignIn;
